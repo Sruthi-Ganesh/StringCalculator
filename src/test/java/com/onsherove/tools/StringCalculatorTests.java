@@ -5,8 +5,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class StringCalculatorTests {
@@ -61,8 +59,49 @@ public class StringCalculatorTests {
     }
 
     @Test
-    void additionWithCustomDelimiter() {
+    void additionWithCustomDelimiter_1() {
         assertEquals(3, stringCalculator.add("//;\n1;2"));
+    }
+
+    @Test
+    void additionWithNegativeNumbers() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> stringCalculator.add("1,2,-3,-4"));
+        String expectedMessage = "Negative numbers not allowed: -3,-4";
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    void additionWithNegativeNumbersCustomDelimiter() {
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> stringCalculator.add("//;\n1;2;-3;-4"));
+        String expectedMessage = "Negative numbers not allowed: -3,-4";
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage, actualMessage);
+    }
+
+    @Test
+    void additionWithNumberGreaterThan1000() {
+        assertEquals(2, stringCalculator.add("2,1001"));
+    }
+
+    @Test
+    void additionWithNumberGreaterThan1000CustomDelimiter() {
+        assertEquals(2, stringCalculator.add("//;\n2;1001"));
+    }
+
+    @Test
+    void additionWithReptitiveCustomDelimiters() {
+        assertEquals(2, stringCalculator.add("//;;;\n2;;;1001"));
+    }
+
+    @Test
+    void additionWithMultipleCustomDelimiters() {
+        assertEquals(2, stringCalculator.add("//;;\n2;;;1001"));
+    }
+
+    @Test
+    void additionWithMultipleDifferentCustomDelimiters() {
+        assertEquals(6, stringCalculator.add("//[*][%]\n1*2%3"));
     }
 
 }

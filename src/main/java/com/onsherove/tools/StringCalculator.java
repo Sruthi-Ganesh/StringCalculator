@@ -1,43 +1,37 @@
 package com.onsherove.tools;
 
-import java.util.Objects;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class StringCalculator {
     public int add(String numbers) {
         if (numbers.isBlank()) {
             return 0;
         }
-        String delimiter = this.getDelimiter(numbers);
+        DelimiterUtils delimiterUtils = new DelimiterUtils(numbers);
+        String delimiter = delimiterUtils.getDelimiter();
         if (delimiter != null) {
-            numbers = this.getDelimiterRemovedFromString(numbers);
+            numbers = delimiterUtils.getDelimiterRemovedFromString();
         }
+        List<Integer> negativeNumbers = new ArrayList<>();
         String[] arrOfNumbers = numbers.split(Objects.requireNonNullElse(delimiter, "[,\n]+"));
         int sum = 0;
         for (String numberString : arrOfNumbers) {
             int number = Integer.parseInt(numberString.trim());
+            if(number < 0) {
+                negativeNumbers.add(number);
+                continue;
+            }
+            if (number > 1000) {
+                continue;
+            }
             sum += number;
         }
+        if(negativeNumbers.size() > 0) {
+            throw new IllegalArgumentException("Negative numbers not allowed: " + StringUtils.convertIntegerListToString(negativeNumbers));
+        }
         return sum;
-    }
-
-    private boolean supportsDifferentDelimiter(String numbers) {
-        return numbers.startsWith("//");
-    }
-
-    private String getDelimiter(String numbers) {
-        if (this.supportsDifferentDelimiter(numbers)) {
-            String delimiter = numbers.split("\n")[0];
-            return String.valueOf(delimiter.charAt(2));
-        }
-        return null;
-    }
-
-    private String getDelimiterRemovedFromString(String numbersWithDelimiter) {
-        if (this.supportsDifferentDelimiter(numbersWithDelimiter)) {
-            String[] numbers = numbersWithDelimiter.split("\n");
-            return StringUtils.convertStringArrayToString(StringUtils.removeStartingIndex(numbers, 0));
-        }
-        return numbersWithDelimiter;
     }
 
     public static void main(String[] args) {
