@@ -35,19 +35,16 @@ public class StringCalculatorTests {
     void additionOfRandomNumbers() {
         Random rand = new Random();
         int expected_sum = 0;
-        int[] integers = new int[100];
-        for (int i = 0; i<100; i++) {
-            int rand_int1 = rand.nextInt(1000);
-            integers[i] = rand_int1;
-            expected_sum += rand_int1;
+        int random_size = rand.nextInt(1000);
+        int[] integers = new int[random_size];
+        for (int i = 0; i < random_size; i++) {
+            int rand_int = rand.nextInt(1000);
+            integers[i] = rand_int;
+            expected_sum += rand_int;
         }
         String arrOfNumbers = Arrays.toString(integers);
         arrOfNumbers = arrOfNumbers.replace("[", "").replace("]", "");
         assertEquals(expected_sum, stringCalculator.add(arrOfNumbers));
-
-
-//        String number = Integer.toString(rand_int1) + ","
-//        assertEquals(14, stringCalculator.add());
     }
 
     @Test
