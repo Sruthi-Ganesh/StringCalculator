@@ -5,7 +5,7 @@ public class StringCalculator {
         if (numbers.isBlank()) {
             return 0;
         }
-        String[] arrOfNumbers = numbers.split(",");
+        String[] arrOfNumbers = numbers.split("[,\n]+");
         int sum = 0;
         for (String numberString : arrOfNumbers) {
             int number = Integer.parseInt(numberString.trim());

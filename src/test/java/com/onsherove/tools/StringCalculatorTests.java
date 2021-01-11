@@ -28,7 +28,12 @@ public class StringCalculatorTests {
 
     @Test
     void additionOfMultipleNumbers() {
-        assertEquals(109, stringCalculator.add("12,2,39,56"));
+        assertEquals(174, stringCalculator.add("12,2,39,56,65"));
+    }
+
+    @Test
+    void additionWithNewLines() {
+        assertEquals(174, stringCalculator.add("12\n2,39,56\n65"));
     }
 
     @Test
