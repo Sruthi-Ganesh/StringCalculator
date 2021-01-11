@@ -1,8 +1,8 @@
 package com.onsherove.tools;
 
-import java.util.*;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class StringCalculator {
     public int add(String numbers) {
@@ -19,7 +19,7 @@ public class StringCalculator {
         int sum = 0;
         for (String numberString : arrOfNumbers) {
             int number = Integer.parseInt(numberString.trim());
-            if(number < 0) {
+            if (number < 0) {
                 negativeNumbers.add(number);
                 continue;
             }
@@ -28,14 +28,9 @@ public class StringCalculator {
             }
             sum += number;
         }
-        if(negativeNumbers.size() > 0) {
+        if (negativeNumbers.size() > 0) {
             throw new IllegalArgumentException("Negative numbers not allowed: " + StringUtils.convertIntegerListToString(negativeNumbers));
         }
         return sum;
-    }
-
-    public static void main(String[] args) {
-        StringCalculator stringCalculator = new StringCalculator();
-        System.out.println(stringCalculator.add("1,2"));
     }
 }

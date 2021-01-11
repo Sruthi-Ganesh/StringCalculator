@@ -6,6 +6,7 @@ import java.util.regex.Pattern;
 public class DelimiterUtils {
     String numbers;
     String delimiter;
+
     public DelimiterUtils(String numbers) {
         this.numbers = numbers;
     }
@@ -27,7 +28,7 @@ public class DelimiterUtils {
             } else {
                 delimiters.append(delimiter);
             }
-            this.delimiter = "["  + delimiters.toString() + "]+";
+            this.delimiter = "[" + delimiters.toString() + "]+";
             return this.delimiter;
         }
         return null;
